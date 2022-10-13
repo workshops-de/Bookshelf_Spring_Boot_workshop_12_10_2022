@@ -6,6 +6,8 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -53,6 +55,14 @@ public class BookRestController {
     List<Book> getBooksByAuthor(@RequestParam String author) {
         return books.stream()
                 .filter(book -> book.getAuthor().startsWith(author))
+                .toList();
+    }
+
+    @PostMapping("/search")
+    List<Book> searchBook (@RequestBody BookSearchRequest searchRequest) {
+        return books.stream()
+                .filter(book -> book.getAuthor().contains(searchRequest.getAuthorName())
+                        || book.getIsbn().equals(searchRequest.getIsbn()))
                 .toList();
     }
 }
