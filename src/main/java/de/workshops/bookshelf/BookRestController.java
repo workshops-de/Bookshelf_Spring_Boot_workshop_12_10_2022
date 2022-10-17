@@ -62,6 +62,11 @@ public class BookRestController {
         return ResponseEntity.ok(books);
     }
 
+    @PostMapping
+    ResponseEntity<Book> saveBook(@RequestBody Book book) {
+        return ResponseEntity.ok(book);
+    }
+
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<String> contraintViolation() {
         return ResponseEntity.badRequest().body("Something went wrong");
