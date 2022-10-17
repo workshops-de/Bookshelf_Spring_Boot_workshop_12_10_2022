@@ -1,12 +1,12 @@
 <configuration scan="true" scanPeriod="10 seconds" debug="false">
-    <springProfile name="default"><!-- no date, ansi colored, no file output -->
-        <property name="PATTERN"
-                  value="%d{HH:mm:ss.SSS} [%X{user}] %highlight(%-5level) %highlight(%48.48logger) - %msg%n"/>
-    </springProfile>
     <springProfile name="prod"><!-- no color, but file output -->
         <property name="PATTERN"
                   value="%d{dd.MM.yyyy HH:mm:ss.SSS} [%X{user}] [%thread] %-5level %logger{36} - %msg%n"/>
         <property name="LOGFILE" value="workshop"/>
+    </springProfile>
+    <springProfile name="!prod"><!-- no date, ansi colored, no file output -->
+        <property name="PATTERN"
+                  value="%d{HH:mm:ss.SSS} [%X{user}] %highlight(%-5level) %highlight(%48.48logger) - %msg%n"/>
     </springProfile>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
@@ -31,11 +31,11 @@
 
     <!-- For all those not explicitly defined below use this log level: -->
     <root level="INFO">
-        <springProfile name="default, jenkins">
-            <appender-ref ref="STDOUT"/>
-        </springProfile>
         <springProfile name="prod">
             <appender-ref ref="FILE"/>
+        </springProfile>
+        <springProfile name="!prod">
+            <appender-ref ref="STDOUT"/>
         </springProfile>
     </root>
 

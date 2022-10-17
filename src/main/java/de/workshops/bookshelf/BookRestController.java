@@ -1,5 +1,8 @@
 package de.workshops.bookshelf;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -20,7 +23,11 @@ import java.util.List;
 @RequestMapping("/book")
 @Validated
 public class BookRestController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(BookRestController.class);
     private final BookService bookService;
+
+    @Value("${my.name}")
+    private String name;
 
     public BookRestController(BookService bookService) {
         this.bookService = bookService;
@@ -28,6 +35,7 @@ public class BookRestController {
 
     @GetMapping
     ResponseEntity<List<Book>> getAllBooks() {
+        LOGGER.info(name);
         final var books = bookService.getAllBooks();
         if (books.isEmpty()) {
             return ResponseEntity.noContent().build();
