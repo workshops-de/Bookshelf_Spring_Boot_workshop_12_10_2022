@@ -1,6 +1,7 @@
 package de.workshops.bookshelf;
 
 import com.fasterxml.jackson.databind.util.ClassUtil;
+import io.swagger.v3.oas.models.OpenAPI;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;

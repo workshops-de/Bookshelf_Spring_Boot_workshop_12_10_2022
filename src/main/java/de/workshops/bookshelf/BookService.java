@@ -1,16 +1,28 @@
 package de.workshops.bookshelf;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class BookService {
+class BookService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(BookService.class);
 
     private final BookRepository repository;
+    private final Book novel;
+    private final Book cookbook;
 
-    public BookService(BookRepository repository) {
+    BookService(BookRepository repository, Book novel, @Qualifier("cookbookBook") Book cookbook) {
         this.repository = repository;
+        this.novel = novel;
+        this.cookbook = cookbook;
+
+        LOGGER.info("Novel: {}", novel.getDescription());
+        LOGGER.info("Cookbook: {}", cookbook.getDescription());
     }
 
     List<Book> getAllBooks() {
@@ -30,7 +42,7 @@ public class BookService {
                 .toList();
     }
 
-    public List<Book> searchBooks(BookSearchRequest searchRequest) {
+    List<Book> searchBooks(BookSearchRequest searchRequest) {
         return repository.findAll().stream()
                 .filter(book -> book.getAuthor().contains(searchRequest.getAuthorName())
                         || book.getIsbn().equals(searchRequest.getIsbn()))
