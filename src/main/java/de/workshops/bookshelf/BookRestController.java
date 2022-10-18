@@ -72,6 +72,7 @@ public class BookRestController {
 
     @PostMapping
     ResponseEntity<Book> saveBook(@RequestBody Book book) {
+        bookService.save(book);
         return ResponseEntity.ok(book);
     }
 

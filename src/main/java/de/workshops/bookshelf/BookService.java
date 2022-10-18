@@ -12,11 +12,11 @@ class BookService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BookService.class);
 
-    private final BookRepository repository;
+    private final BookJpaRepository repository;
     private final Book novel;
     private final Book cookbook;
 
-    BookService(BookRepository repository, Book novel, @Qualifier("cookbookBook") Book cookbook) {
+    BookService(BookJpaRepository repository, Book novel, @Qualifier("cookbookBook") Book cookbook) {
         this.repository = repository;
         this.novel = novel;
         this.cookbook = cookbook;
@@ -47,5 +47,9 @@ class BookService {
                 .filter(book -> book.getAuthor().contains(searchRequest.getAuthorName())
                         || book.getIsbn().equals(searchRequest.getIsbn()))
                 .toList();
+    }
+
+    public void save(Book book) {
+        repository.save(book);
     }
 }
