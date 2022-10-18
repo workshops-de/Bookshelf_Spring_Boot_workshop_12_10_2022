@@ -16,25 +16,10 @@ class BookJdbcRepositoryTest {
     @Autowired
     BookJdbcRepository repository;
 
-    @Autowired
-    JdbcTemplate template;
-
-    @BeforeEach
-    void initDb () {
-        String sql = "INSERT INTO BOOK (id, title, author, description, isbn) VALUES (1, 'title', 'author', 'description', 'isbn')";
-        template.update(sql);
-    }
-
     @Test
     void shouldFindAllBooks() {
         final var bookList = repository.findAll();
 
-        assertThat(bookList)
-                .hasSize(1)
-                .first()
-                .hasFieldOrPropertyWithValue("title", "title")
-                .hasFieldOrPropertyWithValue("description", "description")
-                .hasFieldOrPropertyWithValue("author", "author")
-                .hasFieldOrPropertyWithValue("isbn", "isbn");
+        assertThat(bookList).hasSize(3);
     }
 }
