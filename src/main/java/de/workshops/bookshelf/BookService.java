@@ -12,11 +12,11 @@ class BookService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BookService.class);
 
-    private final BookJpaRepository repository;
+    private final BookJdbcRepository repository;
     private final Book novel;
     private final Book cookbook;
 
-    BookService(BookJpaRepository repository, Book novel, @Qualifier("cookbookBook") Book cookbook) {
+    BookService(BookJdbcRepository repository, Book novel, @Qualifier("cookbookBook") Book cookbook) {
         this.repository = repository;
         this.novel = novel;
         this.cookbook = cookbook;

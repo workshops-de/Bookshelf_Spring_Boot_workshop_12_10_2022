@@ -8,7 +8,7 @@ server:
 springdoc:
   api-docs:
     enabled:
-      false
+      true
 spring:
   datasource:
     url: jdbc:h2:./bookshelf;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE
@@ -31,5 +31,6 @@ spring:
   sql:
     init:
       mode: always
-
-
+  security:
+    user:
+      password: geheim
